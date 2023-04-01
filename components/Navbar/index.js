@@ -17,6 +17,7 @@ export default function Navbar() {
               <input className="form-control me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search"/>
               <button className="btn text-light" type="submit" style={{backgroundColor:"#0B2447"}}>Ara</button>
             </form>
+            {/* Menü Kısmı Başlangıç */}
             <ul className="navbar-nav me-auto mb-2 mb-lg-0" >
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" href="/">Ana Sayfa</Link>
@@ -41,6 +42,7 @@ export default function Navbar() {
                 </ul>
               </li>
             </ul>
+             {/* Menü Kısmı Bitiş*/}
         </div>
       </div>
     </nav>
