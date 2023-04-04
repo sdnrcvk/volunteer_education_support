@@ -1,6 +1,5 @@
 import React from 'react'
-import { MdFacebook  } from "react-icons/md";
-import { FaTwitter, FaLinkedin, FaGithub, FaGoogle, FaInstagram ,FaMedium } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaGithub, FaGoogle, FaInstagram ,FaMedium, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -63,16 +62,19 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
       </section>
-    
-      <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-        <div className="me-5 d-none d-lg-block">
-          <span>Sosyal medya üzerinden bizlere ulaşabilirsiniz :</span>
-        </div>
-    
-        <div>
+
+      <hr/>
+
+      <div className="text-center p-4" style={{backgroundColor: "#0B2447"}}>
+        <div class="flex mt-2 mb-4 space-x-1 sm:justify-end md:mt-0">
+          <span style={{marginRight:"auto",alignItems: "center"}}>
+            © 2023 &nbsp;
+          <a className="text-reset fw-bold" href="#!">vedus.com</a>
+          </span>
           <a href="#!" className="me-4 text-light">
-            <MdFacebook/>
+            <FaFacebook/>
           </a>
           <a href="#!" className="me-4 text-light">
             <FaTwitter/>
@@ -93,12 +95,9 @@ export default function Footer() {
             <FaMedium/>
           </a>
         </div>
-      </section>
 
-      <div className="text-center p-4" style={{backgroundColor: "rgba(0, 0, 0, 0.05)"}}>
-        © 2023 &nbsp;
-        <a className="text-reset fw-bold" href="#!">vedus.com</a>
       </div>
+      
     </footer>
   )
 }
