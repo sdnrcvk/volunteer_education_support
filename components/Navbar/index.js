@@ -1,7 +1,8 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ArrowRightOnRectangleIcon, Cog6ToothIcon, UserIcon} from '@heroicons/react/24/solid'
+import { ArrowRightOnRectangleIcon, Cog6ToothIcon, UserIcon, DocumentDuplicateIcon, DocumentArrowUpIcon
+} from '@heroicons/react/24/solid'
 
 const navigation = [
   { name: 'Ana Sayfa', href: '/', current: true },
@@ -51,7 +52,7 @@ export default function Navbar() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-dark-300 hover:bg-gray-700 hover:text-white',
+                          item.current ? 'bg-sky-900 text-white' : 'text-dark-300 hover:bg-amber-500 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -62,20 +63,27 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+              
+              {/* Arama Kutusu */}
+              <form className="d-flex flex-grow-1 justify-content-center" role="search">
+                <input className="form-control me-2 flex-grow-1 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="search" placeholder="Ara" aria-label="Search"/>
+                <button className="btn text-white bg-amber-500 hover:bg-amber-600	focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm" type="submit">Ara</button>
+              </form>
 
+
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {/* Login-Register Butonları */}
+                <div className='flex items-center justify-center'>
+                  <div className="border w-fit rounded-xl shadow-sm">
+                      <button className="px-2 py-2 rounded-l-xl text-white m-0 bg-sky-900	hover:bg-sky-800 transition">Giriş Yap</button>
+                      <button className="px-2 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition">Üye Ol</button>
+                  </div>
+                </div>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="sr-only">Open user menu</span>
+                      <span className="sr-only">Kullanıcı Menüsü</span>
                       <img
                         className="h-8 w-8 rounded-full"
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -119,6 +127,36 @@ export default function Navbar() {
                             </span>
                             <span className="inline-block align-middle ml-2">
                               Ayarlar
+                            </span>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            <span className="inline-block align-middle">
+                              <DocumentArrowUpIcon className="h-5" aria-hidden="true" />
+                            </span>
+                            <span className="inline-block align-middle ml-2">
+                              Verilen Dersler
+                            </span>
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            <span className="inline-block align-middle">
+                              <DocumentDuplicateIcon className="h-5" aria-hidden="true" />
+                            </span>
+                            <span className="inline-block align-middle ml-2">
+                              Alınan Dersler
                             </span>
                           </a>
                         )}
@@ -169,55 +207,3 @@ export default function Navbar() {
     </Disclosure>
   )
 }
-
-
-// import React from 'react'
-// import Link from 'next/link'
-// import { FaUser, FaSignOutAlt } from "react-icons/fa";
-
-// export default function Navbar() {
-//   return (
-//     <nav className="navbar navbar-expand-lg bg-warning">
-//       <div className="container-fluid">
-//         <a className="navbar-brand" href="#">
-//           <img src="logo.png" alt="VEDUS Logo" width="150"/>
-//         </a>
-//         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-//           <span className="navbar-toggler-icon"></span>
-//         </button>
-//         <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-//             <form className="d-flex flex-grow-1 justify-content-center" role="search">
-//               <input className="form-control me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search"/>
-//               <button className="btn text-light" type="submit" style={{backgroundColor:"#0B2447"}}>Ara</button>
-//             </form>
-//             {/* Menü Kısmı Başlangıç */}
-//             <ul className="navbar-nav me-auto mb-2 mb-lg-0" >
-//               <li className="nav-item">
-//                 <Link className="nav-link active" aria-current="page" href="/">Ana Sayfa</Link>
-//               </li>
-//               <li className="nav-item">
-//                 <Link className="nav-link" href="/courses">Özel Dersler</Link>
-//               </li>
-//               <li className="nav-item">
-//                 <Link className="nav-link" href="/contact">Bize Ulaşın</Link>
-//               </li>
-//               <li className="nav-item dropdown">
-//                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-//                   <FaUser/> Sedanur Çevik
-//                 </a>
-//                 <ul className="dropdown-menu">
-//                   <li><Link className="dropdown-item" href="/">Profilim</Link></li>
-//                   <li><Link className="dropdown-item" href="/courses">Verdiğim Dersler</Link></li>
-//                   <li><Link className="dropdown-item" href="/contact">Aldığım Dersler</Link></li>
-//                   <li><hr className="dropdown-divider"/></li>
-//                   <li><a className="dropdown-item" href="#">
-//                     <FaSignOutAlt/> Çıkış Yap</a></li>
-//                 </ul>
-//               </li>
-//             </ul>
-//              {/* Menü Kısmı Bitiş*/}
-//         </div>
-//       </div>
-//     </nav>
-//   )
-// }
