@@ -68,7 +68,7 @@ export default function Footer() {
       <hr/>
 
       <div className="text-center p-4" style={{backgroundColor: "#0B2447"}}>
-        <div class="flex mt-2 mb-4 space-x-1 sm:justify-end md:mt-0">
+        <div className="flex mt-2 mb-4 space-x-1 sm:justify-end md:mt-0">
           <span style={{marginRight:"auto",alignItems: "center"}}>
             © 2023 &nbsp;
           <a className="text-reset fw-bold" href="#!">vedus.com</a>

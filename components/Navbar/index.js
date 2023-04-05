@@ -1,20 +1,23 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ArrowRightOnRectangleIcon, Cog6ToothIcon, UserIcon, DocumentDuplicateIcon, DocumentArrowUpIcon
 } from '@heroicons/react/24/solid'
-
-const navigation = [
-  { name: 'Ana Sayfa', href: '/', current: true },
-  { name: 'Özel Dersler', href: '/courses', current: false },
-  { name: 'Bize Ulaşın', href: '/contact', current: false },
-]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { useRouter } from 'next/router'
 
 export default function Navbar() {
+  const router = useRouter();
+
+  const navigation = [
+    { name: 'Ana Sayfa', href: '/', current: router.pathname === '/' },
+    { name: 'Özel Dersler', href: '/courses', current: router.pathname === '/courses' },
+    { name: 'Bize Ulaşın', href: '/contact', current: router.pathname === '/contact' },
+  ]
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
+
   return (
     <Disclosure as="nav" style={{backgroundColor:"#EEEEEE"}}>
       {({ open }) => (
