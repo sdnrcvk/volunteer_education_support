@@ -13,7 +13,7 @@ export default function Courses() {
     {
       id: 1,
       name: 'Earthen Bottle',
-      href: '#',
+      href: '/course-detail',
       price: '$48',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
       imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
@@ -21,7 +21,7 @@ export default function Courses() {
     {
       id: 2,
       name: 'Nomad Tumbler',
-      href: '#',
+      href: '/course-detail',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
@@ -29,7 +29,7 @@ export default function Courses() {
     {
       id: 3,
       name: 'Focus Paper Refill',
-      href: '#',
+      href: '/course-detail',
       price: '$89',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
@@ -37,7 +37,7 @@ export default function Courses() {
     {
       id: 4,
       name: 'Machined Mechanical Pencil',
-      href: '#',
+      href: '/course-detail',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
@@ -45,7 +45,7 @@ export default function Courses() {
     {
       id: 5,
       name: 'Machined Mechanical Pencil',
-      href: '#',
+      href: '/course-detail',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
@@ -53,7 +53,7 @@ export default function Courses() {
     {
       id: 6,
       name: 'Focus Paper Refill',
-      href: '#',
+      href: '/course-detail',
       price: '$89',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
@@ -61,7 +61,7 @@ export default function Courses() {
     {
       id: 7,
       name: 'Nomad Tumbler',
-      href: '#',
+      href: '/course-detail',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
@@ -69,7 +69,7 @@ export default function Courses() {
     {
       id: 8,
       name: 'Earthen Bottle',
-      href: '#',
+      href: '/course-detail',
       price: '$48',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
       imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
@@ -189,7 +189,7 @@ export default function Courses() {
           </Transition.Root>
 
           <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+            <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900">Özel Dersler</h1>
               <div className="flex items-center">
                 <Menu as="div" className="relative inline-block text-left">
@@ -264,7 +264,7 @@ export default function Courses() {
                 <div className="lg:col-span-3">
                   <div className="bg-white">
                     <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
-                      <h2 className="sr-only">Products</h2>
+                      <h2 className="sr-only">Özel Dersler</h2>
                       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {products.map((product) => (
                           <a key={product.id} href={product.href} className="group">
