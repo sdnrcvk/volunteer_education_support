@@ -5,6 +5,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link'
 
 export default function Courses() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -175,9 +176,9 @@ export default function Courses() {
                       <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                         {subCategories.map((category) => (
                           <li key={category.name}>
-                            <a href={category.href} className="block px-2 py-3">
+                            <Link href={category.href} className="block px-2 py-3">
                               {category.name}
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
@@ -217,7 +218,7 @@ export default function Courses() {
                         {sortOptions.map((option) => (
                           <Menu.Item key={option.name}>
                             {({ active }) => (
-                              <a
+                              <Link
                                 href={option.href}
                                 className={classNames(
                                   option.current ? 'font-medium text-gray-900' : 'text-gray-500',
@@ -226,7 +227,7 @@ export default function Courses() {
                                 )}
                               >
                                 {option.name}
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         ))}
@@ -254,7 +255,7 @@ export default function Courses() {
                   <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                     {subCategories.map((category) => (
                       <li key={category.name}>
-                        <a href={category.href}>{category.name}</a>
+                        <Link href={category.href}>{category.name}</Link>
                       </li>
                     ))}
                   </ul>
@@ -267,7 +268,7 @@ export default function Courses() {
                       <h2 className="sr-only">Özel Dersler</h2>
                       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {products.map((product) => (
-                          <a key={product.id} href={product.href} className="group">
+                          <Link key={product.id} href={product.href} className="group">
                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                               <img
                                 src={product.imageSrc}
@@ -277,7 +278,7 @@ export default function Courses() {
                             </div>
                             <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
                             <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>

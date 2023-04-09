@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ArrowRightOnRectangleIcon, Cog6ToothIcon, UserIcon, DocumentDuplicateIcon, DocumentArrowUpIcon
 } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export default function Navbar() {
   const router = useRouter();
@@ -51,7 +52,7 @@ export default function Navbar() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -61,7 +62,7 @@ export default function Navbar() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -78,8 +79,8 @@ export default function Navbar() {
                 {/* Login-Register Butonları */}
                 <div className='flex items-center justify-center'>
                   <div className="border w-fit rounded-xl shadow-sm">
-                      <button className="px-2 py-2 rounded-l-xl text-white m-0 bg-sky-900	hover:bg-sky-800 transition">Giriş Yap</button>
-                      <button className="px-2 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition">Üye Ol</button>
+                      <Link href={"/login"} className="px-2 py-2 rounded-l-xl text-white m-0 bg-sky-900	hover:bg-sky-800 transition">Giriş Yap</Link>
+                      <Link href={"/register"} className="px-2 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition">Üye Ol</Link>
                   </div>
                 </div>
                 {/* Profile dropdown */}
@@ -89,7 +90,7 @@ export default function Navbar() {
                       <span className="sr-only">Kullanıcı Menüsü</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_960_720.png"
                         alt=""
                       />
                     </Menu.Button>
@@ -106,8 +107,8 @@ export default function Navbar() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            href="/profile"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
@@ -116,12 +117,12 @@ export default function Navbar() {
                             <span className="inline-block align-middle ml-2">
                               Profil
                             </span>
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <Link
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
@@ -131,12 +132,12 @@ export default function Navbar() {
                             <span className="inline-block align-middle ml-2">
                               Ayarlar
                             </span>
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <Link
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
@@ -146,12 +147,12 @@ export default function Navbar() {
                             <span className="inline-block align-middle ml-2">
                               Verilen Dersler
                             </span>
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <Link
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
@@ -161,13 +162,13 @@ export default function Navbar() {
                             <span className="inline-block align-middle ml-2">
                               Alınan Dersler
                             </span>
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <hr />
                       <Menu.Item>
                         {({ active }) => (
-                          <a
+                          <Link
                             href="/"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
@@ -177,7 +178,7 @@ export default function Navbar() {
                             <span className="inline-block align-middle ml-2">
                               Çıkış Yap
                             </span>
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                     </Menu.Items>
