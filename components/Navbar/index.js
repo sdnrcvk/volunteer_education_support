@@ -64,27 +64,27 @@ export default function Navbar() {
                         {item.name}
                       </Link>
                     ))}
+                    {/* Arama Kutusu */}
+                    <form className="d-flex flex-grow-1 justify-content-center" role="search">
+                      <input className="form-control me-2 flex-grow-1 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="search" placeholder="Ara" aria-label="Search"/>
+                      <button className="btn text-white bg-amber-500 hover:bg-amber-600	focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm" type="submit">Ara</button>
+                    </form>
                   </div>
                 </div>
               </div>
               
-              {/* Arama Kutusu */}
-              <form className="d-flex flex-grow-1 justify-content-center" role="search">
-                <input className="form-control me-2 flex-grow-1 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="search" placeholder="Ara" aria-label="Search"/>
-                <button className="btn text-white bg-amber-500 hover:bg-amber-600	focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm" type="submit">Ara</button>
-              </form>
-
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Login-Register Butonları */}
-                <div className='flex items-center justify-center'>
+                {/* <div className='flex items-center justify-center'>
                   <div className="border w-fit rounded-xl shadow-sm">
                       <Link href={"/login"} className="px-2 py-2 rounded-l-xl text-white m-0 bg-sky-900	hover:bg-sky-800 transition">Giriş Yap</Link>
                       <Link href={"/register"} className="px-2 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition">Üye Ol</Link>
                   </div>
-                </div>
+                </div> */}
+                
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                <Menu as="div" className="relative ml-3 z-40">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Kullanıcı Menüsü</span>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTwitter, FaGlobe, FaLinkedin, FaGithub, FaGoogle, FaInstagram , FaMedium, FaFacebook } from "react-icons/fa";
+import { FaTwitter, FaGlobe, FaLinkedin, FaEdit, FaGithub, FaGoogle, FaInstagram , FaMedium, FaFacebook } from "react-icons/fa";
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import {
@@ -11,8 +11,10 @@ import {
     MDBCardBody,
     MDBCardImage,
     MDBListGroup,
-    MDBListGroupItem
+    MDBListGroupItem,
+    MDBBtn
   } from 'mdb-react-ui-kit';
+import Link from 'next/link';
   
 
 export default function Profile() {
@@ -26,7 +28,7 @@ export default function Profile() {
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossOrigin="anonymous"/>
     </Head>
     <Layout>
-    <section style={{ backgroundColor: '#eee' }}>
+    <section>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4">
@@ -38,8 +40,13 @@ export default function Profile() {
                   className="rounded-circle m-auto"
                   style={{ width: '150px' }}
                   fluid />
-                <p className="text-muted mb-1">Bilgisayar Mühendisi</p>
-                <p className="text-muted mb-4">Tokat / Merkez</p>
+                <p className="text-muted mb-1 mt-2">Bilgisayar Mühendisi</p>
+                <p className="text-muted mb-1">Tokat / Merkez</p>
+                <Link href="/edit-profile" className="position-absolute" style={{ bottom: '10px', right: '10px' }}>
+                  <MDBBtn color="warning">
+                    <FaEdit />
+                  </MDBBtn>
+                </Link>
               </MDBCardBody>
             </MDBCard>
 
@@ -51,19 +58,7 @@ export default function Profile() {
                     <MDBCardText>https://mdbootstrap.com</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <FaGithub/>
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <FaTwitter/>
-                    <MDBCardText>@mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <FaInstagram/>
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <FaFacebook/>
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
@@ -155,9 +150,6 @@ export default function Profile() {
                         Atque similique nam recusandae ut eius vel voluptatem dolore, voluptatum tempore sapiente sed cupiditate sint accusamus. Ad pariatur fugit deleniti, doloremque, officiis esse repellendus numquam ut maxime excepturi sequi. Necessitatibus.
                         Repellat, debitis cumque! Magnam quibusdam, voluptatum incidunt unde, soluta quos cumque at aut enim dicta placeat vel numquam! Maiores quam neque fuga nostrum deserunt aperiam illum est, distinctio perspiciatis nam.
                         Quibusdam delectus consectetur voluptas animi optio culpa quasi reprehenderit cumque hic laborum sed accusantium, eos, impedit quos sit quas perferendis, laboriosam modi facilis ipsa corporis ratione amet deserunt. At, quo?
-                        Quia autem vel repudiandae quis omnis accusantium, rerum asperiores molestias ea fugit! Explicabo officiis eveniet velit cum soluta? Mollitia obcaecati quia distinctio sed aliquid, voluptas veniam. Fuga iusto porro cum.
-                        Repellat, beatae quasi itaque quae quas alias et rerum eum nobis nostrum voluptates ipsa laboriosam recusandae dolore dolorem tenetur unde illum. Rerum pariatur id suscipit consectetur fugit quibusdam facilis voluptas!
-                        Optio eos architecto eum cum iure laboriosam minus quae magnam reprehenderit, debitis accusantium, repudiandae ducimus autem labore veniam corrupti libero doloremque quisquam id at laudantium eveniet est tempore? Exercitationem, eligendi.
                     </MDBCardText>
                   </MDBCardBody>
                 </MDBCard>
