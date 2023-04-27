@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Layout from '@/components/Layout'
+import Link from 'next/link'
 
 export default function Home() {
 
@@ -115,15 +116,15 @@ export default function Home() {
                 "Her çocuğun özel bir öğrenme yolculuğu vardır. Bizimle keşfedin, öğrenin ve büyüyün. Gönüllü öğretmenlerimizle birlikte geleceğinizi şekillendirin!"
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
+                <Link
                   href="#"
                   className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Ders Vermek İstiyorum
-                </a>
-                <a href="/courses" className="text-sm font-semibold leading-6 text-gray-900">
+                </Link>
+                <Link href="/courses" className="text-sm font-semibold leading-6 text-gray-900">
                   Ders Almak İstiyorum <span aria-hidden="true">→</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

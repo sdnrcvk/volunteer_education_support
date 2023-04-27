@@ -42,7 +42,7 @@ export default function Profile() {
                   fluid />
                 <p className="text-muted mb-1 mt-2">Bilgisayar Mühendisi</p>
                 <p className="text-muted mb-1">Tokat / Merkez</p>
-                <Link href="/edit-profile" className="position-absolute" style={{ bottom: '10px', right: '10px' }}>
+                <Link href="/edit-profile" className="position-absolute" style={{ top: '10px', right: '10px' }}>
                   <MDBBtn color="warning">
                     <FaEdit />
                   </MDBBtn>
