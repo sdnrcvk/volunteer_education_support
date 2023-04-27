@@ -192,14 +192,16 @@ export default function CourseList() {
             <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 m-1">
-                  <Link
-                    href="/add-course"
-                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Ders Vermek İstiyorum
-                  </Link>
-                </Menu.Button>
+                {pagePath==="/given-courses" && (
+                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 m-1">
+                    <Link
+                      href="/add-course"
+                      className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Ders Ekle
+                    </Link>
+                  </Menu.Button>
+                )}
                 <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 m-1">
                     Sırala
                     <ChevronDownIcon
