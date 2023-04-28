@@ -1,7 +1,7 @@
 import React from 'react'
-import Layout from '@/components/Layout'
 import Head from 'next/head'
 import EditCourseDetailModal from '@/components/EditCourseDetailModal';
+import Layout from '@/components/Layout';
 
 export default function CourseDetail() {
   return (

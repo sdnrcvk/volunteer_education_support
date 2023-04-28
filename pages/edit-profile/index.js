@@ -57,7 +57,7 @@ export default function EditProfile() {
                 {/* Sosyal Medya Linkleri */}
                 <MDBCard className="mb-4 mb-lg-0">
                   <MDBCardBody className="p-0">
-                    <MDBListGroup flush className="rounded-3">
+                    <MDBListGroup className="rounded-3">
                       <MDBListGroupItem className="d-flex justify-content-between align-items-center p-1">
                         <FaGlobe/>
                         <input type="text" name="personal-website" id="personal-website" placeholder="Kişisel Website" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 m-2"/>
@@ -130,7 +130,7 @@ export default function EditProfile() {
                     <MDBRow>
                     <div className="py-1.5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                         <div className="sm:col-span-3">
-                        <label for="city" className="sr-only">Şehir</label>
+                        <label htmlFor="city" className="sr-only">Şehir</label>
                         <div>
                             <select id="city" name="city"
                             className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -141,7 +141,7 @@ export default function EditProfile() {
                         </div>
                         </div>
                         <div className="sm:col-span-3">
-                        <label for="district" className="sr-only">İlçe</label>
+                        <label htmlFor="district" className="sr-only">İlçe</label>
                         <div>
                             <select id="district" name="district"
                             className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
