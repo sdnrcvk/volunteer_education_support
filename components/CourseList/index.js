@@ -1,13 +1,22 @@
-import React from 'react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { getAllCategories } from '@/pages/api/categories'
 
 export default function CourseList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [categories, setCategories]=useState([])
+
+  useEffect(()=>{
+    getAllCategories().then(data => {
+      setCategories(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },[])
 
   const pagePath=useRouter().pathname;
 
@@ -166,13 +175,13 @@ export default function CourseList() {
                 {/* Filters */}
                 <form className="mt-4 border-t border-gray-200">
                     <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                    {subCategories.map((category) => (
-                        <li key={category.name}>
-                        <Link href={category.href} className="block px-2 py-3">
-                            {category.name}
-                        </Link>
-                        </li>
-                    ))}
+                        {categories?.map((category) => (
+                          <li key={category.id}>
+                            <Link href={"#"} className="block px-2 py-3">
+                              {category.category_name}
+                            </Link>
+                          </li>
+                        ))}
                     </ul>
                 </form>
                 </Dialog.Panel>
@@ -260,10 +269,12 @@ export default function CourseList() {
             <form className="hidden lg:block">
                 <h2 className="text-lg mb-3 font-medium text-gray-900">Kategoriler</h2>
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                {subCategories.map((category) => (
-                    <li key={category.name}>
-                        <Link href={category.href}>{category.name}</Link>
-                    </li>
+                {categories?.map((category) => (
+                  <li key={category.id}>
+                    <Link href={"#"} className="block px-2 py-3">
+                      {category.category_name}
+                    </Link>
+                  </li>
                 ))}
                 </ul>
             </form>

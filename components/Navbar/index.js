@@ -5,6 +5,7 @@ import { ArrowRightOnRectangleIcon, Cog6ToothIcon, UserIcon, DocumentDuplicateIc
 } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navbar() {
   const router = useRouter();
@@ -38,14 +39,12 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="logo.png" width="150"
-                    alt="Site Logosu"
-                  />
-                  <img
+                  <Image className="block h-8 w-auto lg:hidden"
+                    src={"/logo.png"} width={1000} height={237}
+                    alt="Site Logosu"/>
+                  <Image
                     className="hidden h-8 w-auto lg:block"
-                    src="logo.png" width="150"
+                    src={"/logo.png"} width={1000} height={237}
                     alt="Site Logosu"
                   />
                 </div>

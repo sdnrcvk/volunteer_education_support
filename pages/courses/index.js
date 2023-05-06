@@ -1,14 +1,23 @@
-import React from 'react'
 import Layout from '@/components/Layout'
 import Head from 'next/head'
-import { Fragment, useState } from 'react'
+import { React, Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
+import { getAllCategories } from '../api/categories'
 
 export default function Courses() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [categories, setCategories]=useState([])
+
+  useEffect(()=>{
+    getAllCategories().then(data => {
+      setCategories(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },[])
 
   const products = [
     {
@@ -82,13 +91,6 @@ export default function Courses() {
     { name: 'En Çok Değerlendirilenler', href: '#', current: false },
     { name: 'En Popüler', href: '#', current: false },
     { name: 'En Yeniler', href: '#', current: false },
-  ]
-  
-  const subCategories = [
-    { name: 'Türkçe', href: '#' },
-    { name: 'Matematik', href: '#' },
-    { name: 'Sosyal Bilimler', href: '#' },
-    { name: 'Fen Bilimleri', href: '#' },
   ]
   
   // const filters = [
@@ -174,10 +176,10 @@ export default function Courses() {
                     {/* Filters */}
                     <form className="mt-4 border-t border-gray-200">
                       <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                        {subCategories.map((category) => (
-                          <li key={category.name}>
-                            <Link href={category.href} className="block px-2 py-3">
-                              {category.name}
+                        {categories?.map((category) => (
+                          <li key={category.id}>
+                            <Link href={"#"} className="block px-2 py-3">
+                              {category.category_name}
                             </Link>
                           </li>
                         ))}
@@ -261,9 +263,9 @@ export default function Courses() {
                 <form className="hidden lg:block">
                   <h2 className="text-lg mb-3 font-medium text-gray-900">Kategoriler</h2>
                   <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                    {subCategories.map((category) => (
-                      <li key={category.name}>
-                        <Link href={category.href}>{category.name}</Link>
+                    {categories.map((category) => (
+                      <li key={category.id}>
+                        <Link href={"#"}>{category.category_name}</Link>
                       </li>
                     ))}
                   </ul>
