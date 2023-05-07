@@ -49,7 +49,7 @@ export default function Profile() {
                       fluid />
                     <p className="text-muted mb-1 mt-2">Bilgisayar Mühendisi</p>
                     <p className="text-muted mb-1">Tokat / Merkez</p>
-                    <Link href="/edit-profile" className="position-absolute" style={{ top: '10px', right: '10px' }}>
+                    <Link href="/edit-profile/{id}" className="position-absolute" style={{ top: '10px', right: '10px' }}>
                       <button className="rounded-md bg-amber-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-amber-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="button">
                         <FaEdit />
                       </button>

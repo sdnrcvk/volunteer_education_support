@@ -24,7 +24,7 @@ export default function CourseList() {
     {
       id: 1,
       name: 'Earthen Bottle',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$48',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
       imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
@@ -32,7 +32,7 @@ export default function CourseList() {
     {
       id: 2,
       name: 'Nomad Tumbler',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
@@ -40,7 +40,7 @@ export default function CourseList() {
     {
       id: 3,
       name: 'Focus Paper Refill',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$89',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
@@ -48,7 +48,7 @@ export default function CourseList() {
     {
       id: 4,
       name: 'Machined Mechanical Pencil',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
@@ -56,7 +56,7 @@ export default function CourseList() {
     {
       id: 5,
       name: 'Machined Mechanical Pencil',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
       imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
@@ -64,7 +64,7 @@ export default function CourseList() {
     {
       id: 6,
       name: 'Focus Paper Refill',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$89',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
       imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
@@ -72,7 +72,7 @@ export default function CourseList() {
     {
       id: 7,
       name: 'Nomad Tumbler',
-      href: '/course-detail',
+      href: '/course-detail{id}',
       price: '$35',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
       imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
@@ -80,7 +80,7 @@ export default function CourseList() {
     {
       id: 8,
       name: 'Earthen Bottle',
-      href: '/course-detail',
+      href: '/course-detail/{id}',
       price: '$48',
       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
       imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
@@ -92,13 +92,6 @@ export default function CourseList() {
     { name: 'En Çok Değerlendirilenler', href: '#', current: false },
     { name: 'En Popüler', href: '#', current: false },
     { name: 'En Yeniler', href: '#', current: false },
-  ]
-  
-  const subCategories = [
-    { name: 'Türkçe', href: '#' },
-    { name: 'Matematik', href: '#' },
-    { name: 'Sosyal Bilimler', href: '#' },
-    { name: 'Fen Bilimleri', href: '#' },
   ]
   
   // const filters = [
@@ -177,7 +170,7 @@ export default function CourseList() {
                     <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                         {categories?.map((category) => (
                           <li key={category.id}>
-                            <Link href={"#"} className="block px-2 py-3">
+                            <Link href={"#"}>
                               {category.category_name}
                             </Link>
                           </li>
@@ -271,7 +264,7 @@ export default function CourseList() {
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                 {categories?.map((category) => (
                   <li key={category.id}>
-                    <Link href={"#"} className="block px-2 py-3">
+                    <Link href={"#"}>
                       {category.category_name}
                     </Link>
                   </li>

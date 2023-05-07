@@ -59,7 +59,6 @@ export default function Login() {
             />
             {errors.email && touched.email && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">
             {errors.email}</div>)}
-
           </div>
           <div>
             <label htmlFor="password" className="sr-only">
