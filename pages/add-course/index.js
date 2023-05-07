@@ -10,6 +10,8 @@ import {
   } from 'mdb-react-ui-kit';
 import AddCategoryModal from '@/components/AddCategoryModal';
 import { getAllCategories } from '../api/categories';
+import { useFormik } from 'formik';
+import validationSchema from '../validations/addCourseValidations';
 
 export default function AddCourse() {
   const [categories, setCategories]=useState([])
@@ -21,6 +23,18 @@ export default function AddCourse() {
       console.log(err);
     });
   },[])
+
+  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
+    initialValues:{
+      courseTitle:'',
+      category:'',
+      description:'',
+    },
+    onSubmit:values=>{
+      console.log(values);
+    },
+    validationSchema,
+  })
 
   return (
     <>
@@ -44,48 +58,55 @@ export default function AddCourse() {
         <div className="container py-4">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             {/* Kişisel Bilgiler */}
-            <MDBContainer>
-                <MDBRow>
-                    <MDBCol lg="4">
-                        <MDBCard className="mb-4">
-                        <MDBCardBody className="text-center">
-                            <div className="mx-auto flex flex-wrap">
-                            <img alt="ecommerce" className="mx-auto object-cover object-center rounded border border-gray-200" src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"/>
-                            </div>
-                        </MDBCardBody>
-                        </MDBCard>
-                    </MDBCol>
-                    <MDBCol lg="8">
-                        <MDBCard className="mb-4">
-                        <MDBCardBody>
-                            <MDBRow className='py-2'>
-                            <input type="text" name="course-title" id="course-title" placeholder="Ders İlanı Başlık" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                            </MDBRow>
-                            <hr />
-                            <MDBRow className='py-2'>
-                              <select id="category" name="category"
-                                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    <option>Kategori Seçiniz</option>
-                                  {categories.map((category) => (
-                                    <option key={category.id} value={category.id}>{category.category_name}</option>
-                                  ))}
-                              </select>
-                            </MDBRow>
-                            <hr />
-                            <MDBRow className='py-2'>
-                            <textarea id="description" name="description" rows="10" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='İlan hakkında bir şeyler yaz...'></textarea>
-                            </MDBRow>
-                            <div className="mt-6 flex items-center justify-end gap-x-6" >
+              <MDBContainer>
+                  <MDBRow>
+                      <MDBCol lg="4">
+                          <MDBCard className="mb-4">
+                          <MDBCardBody className="text-center">
+                              <div className="mx-auto flex flex-wrap">
+                              <img alt="ecommerce" className="mx-auto object-cover object-center rounded border border-gray-200" src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"/>
+                              </div>
+                          </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+                      <MDBCol lg="8">
+                          <MDBCard className="mb-4">
+                            <MDBCardBody>
+                              <form onSubmit={handleSubmit}>
+                                <MDBRow className='py-2'>
+                                <input type="text" name="courseTitle" id="courseTitle" placeholder="Ders İlanı Başlık" value={values.courseTitle} onChange={handleChange} onBlur={handleBlur} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                                {errors.courseTitle && touched.courseTitle && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.courseTitle}</div>)}
+                                </MDBRow>
+                                <hr />
+                                <MDBRow className='py-2'>
+                                  <select id="category" name="category" value={values.category} onChange={handleChange} onBlur={handleBlur} 
+                                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <option>Kategori Seçiniz</option>
+                                        {categories?.map((category) => (
+                                          <option key={category.id} value={category.id}>{category.category_name}</option>
+                                        ))}
+                                  </select>
+                                  {errors.category && touched.category && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.category}</div>)}
+                                </MDBRow>
+                                <hr />
+                                <MDBRow className='py-2'>
+                                <textarea id="description" name="description" rows="10" value={values.description} onChange={handleChange} onBlur={handleBlur} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='İlan hakkında bir şeyler yaz...'></textarea>
+                                {errors.description && touched.description && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.description}</div>)}
+                                </MDBRow>
+                                <MDBRow className='flex items-center justify-end gap-x-6'>
+                                      <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="submit">
+                                      Ekle
+                                      </button>
+                                </MDBRow>
+                              </form>
+                              <MDBRow className='py-2'>
                                 <AddCategoryModal/>
-                                <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="submit">
-                                 Ekle
-                                </button>
-                            </div>
-                        </MDBCardBody>
-                        </MDBCard>
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+                              </MDBRow>
+                            </MDBCardBody>
+                          </MDBCard>
+                      </MDBCol>
+                  </MDBRow>
+              </MDBContainer>
           </div>
         </div>
       </section>
