@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { LockClosedIcon, ArrowLeftCircleIcon } from '@heroicons/react/20/solid'
 import { useFormik } from 'formik'
 import validationSchema from '../validations/registerValidations'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getAllCities, getDistrictsByCityId } from '../api/province'
 
 export default function Register() {
+  const [cities, setCities]=useState([])
+  const [districts, setDistricts]=useState([])
+
+  useEffect(()=>{
+    getAllCities().then(data => {
+      setCities(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },[])
 
   const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
     initialValues:{
@@ -124,11 +135,16 @@ export default function Register() {
             <div className="sm:col-span-3">
               <label htmlFor="city" className="sr-only">Şehir</label>
               <div>
-                <select id="city" name="city" value={values.city} onBlur={handleBlur} onChange={handleChange}
+                <select id="city" name="city" value={values.city} onBlur={handleBlur} 
+                onChange={(e)=>{
+                    handleChange(e)
+                    getDistrictsByCityId(e.currentTarget.value, setDistricts)
+                }}
                 className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                   <option>İl Seçiniz</option>
-                  <option>Tokat</option>
-                  <option>Karabük</option>
+                    {cities?.map((city) => (
+                      <option key={city.id} value={city.id}>{city.city_name}</option>
+                    ))}
                 </select>
                 {errors.city && touched.city && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.city}</div>)}
               </div>
@@ -136,10 +152,12 @@ export default function Register() {
             <div className="sm:col-span-3">
               <label htmlFor="district" className="sr-only">İlçe</label>
               <div>
-                <select id="district" name="district" value={values.city} onBlur={handleBlur} onChange={handleChange}
+                <select id="district" name="district" value={values.district} onBlur={handleBlur} onChange={handleChange}
                 className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                   <option>İlçe Seçiniz</option>
-                  <option>Merkez</option>
+                  {districts?.map((district)=>(
+                    <option key={district.id} value={district.id}>{district.district_name}</option>
+                  ))}
                 </select>
                 {errors.district && touched.district && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.district}</div>)}
               </div>
