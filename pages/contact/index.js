@@ -3,17 +3,19 @@ import Layout from '@/components/Layout'
 import Head from 'next/head'
 import { useFormik } from 'formik'
 import validationSchema from '../validations/contactValidations'
+import { sendMessage } from '../api/messages'
 
 export default function contact() {
 
-  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched, handleBlur} = useFormik({
     initialValues:{
       fullname:'',
       email:'',
       message:'',
     },
-    onSubmit:values=>{
-      console.log(values);
+    onSubmit:(values,{resetForm})=>{
+      sendMessage(values);
+      resetForm();
     },
     validationSchema,
   })
@@ -56,12 +58,15 @@ export default function contact() {
                   <form onSubmit={handleSubmit}>
                     <div className="form-group mb-6">
                       <input type="text" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="fullname" name='fullname' placeholder="Adınız" value={values.fullname} onChange={handleChange} onBlur={handleBlur}/>
+                      {errors.fullname && touched.fullname && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.fullname}</div>)}
                     </div>
                     <div className="form-group mb-6">
                       <input type="email" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="email" name='email' placeholder="Email" value={values.email} onChange={handleChange} onBlur={handleBlur}/>
+                      {errors.email && touched.email && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.email}</div>)}
                     </div>
                     <div className="form-group mb-6">
                       <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="message" name='message' rows="3" placeholder="Mesaj" value={values.message} onChange={handleChange} onBlur={handleBlur}></textarea>
+                      {errors.message && touched.message && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.message}</div>)}
                     </div>
                     <button type="submit" className="
                       w-full

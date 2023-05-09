@@ -2,13 +2,20 @@ import Layout from '@/components/Layout'
 import Head from 'next/head'
 import { React, Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
+import { deleteMessage, getAllMessages } from '../api/messages'
 
 export default function Messages() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [messages, setMessages]=useState([])
 
+  useEffect(()=>{
+    getAllMessages().then(data => {
+      setMessages(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },[])
 
   const products = [
     {
@@ -165,17 +172,17 @@ export default function Messages() {
                     <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
                       <h2 className="sr-only">Mesajlar</h2>
                       <div className="gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                        {products.map((product) => (
-                          <div key={product.id} className="group relative">
+                        {messages.map((message) => (
+                          <div key={message.id} className="group relative">
                           <Link href={"#"} className="block">
                             <div className="overflow-hidden rounded-lg bg-gray-200 mb-2">
-                              <h3 className="my-1 mx-2 text-sm text-gray-700">Sedanur Çevik - sdnrcvk@gmail.com</h3>
-                              <p className="my-1 mx-2 text-sm font-medium text-gray-900">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, consequatur.</p>
+                              <h3 className="my-1 mx-2 text-sm text-gray-700">{message.fullname} - {message.email}</h3>
+                              <p className="my-1 mx-2 text-sm font-medium text-gray-900">{message.message}</p>
                             </div>
                           </Link>
                           <button
                             className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition duration-200"
-                            onClick={() => handleDelete(product.id)}
+                            onClick={() => deleteMessage(message.id)}
                           >
                             X
                           </button>
