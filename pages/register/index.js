@@ -5,6 +5,7 @@ import validationSchema from '../validations/registerValidations'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getAllCities, getDistrictsByCityId } from '../api/province'
+import { register } from '../api/auth'
 
 export default function Register() {
   const [cities, setCities]=useState([])
@@ -18,7 +19,7 @@ export default function Register() {
     });
   },[])
 
-  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting } = useFormik({
     initialValues:{
       firstName:'',
       lastName:'',
@@ -32,8 +33,11 @@ export default function Register() {
       passwordConfirm:'',
       accept:true,
     },
-    onSubmit:values=>{
-      console.log(values);
+    onSubmit:(values,{resetForm,setSubmitting})=>{
+     // console.log(values);
+      register(values);
+      resetForm();
+      setSubmitting(false);
     },
     validationSchema,
   })
@@ -222,12 +226,16 @@ export default function Register() {
           </div>
         </div>
 
-        <div className="flex items-start mb-6">
-          <div className="flex items-center h-5">
-          <input id="accept" name='accept' type="checkbox" value={values.accept} onChange={handleChange} onBlur={handleBlur} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required/>
+        <div className="flex items-start">
+          <div className="flex items-center justify-between">
+            <input id="accept" name='accept' type="checkbox" value={values.accept} onChange={handleChange} onBlur={handleBlur} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required/>
+            <label htmlFor="accept" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><Link href="#" className="text-blue-600 hover:underline dark:text-blue-500">Şartlar ve koşulları</Link> kabul ediyorum.</label>
+            <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            Zaten hesabınız var mı ? {' '}
+            <Link href ="/login" className="text-blue-600 hover:underline dark:text-blue-500">Giriş Yap</Link>
+            </span>{' '}
           </div>
-          <label htmlFor="accept" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"><Link href="#" className="text-blue-600 hover:underline dark:text-blue-500">Şartlar ve koşulları</Link> kabul ediyorum.</label>
-      </div>
+        </div>
         <div>
           <button
             type="submit"

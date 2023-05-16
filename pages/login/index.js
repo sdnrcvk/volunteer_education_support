@@ -4,17 +4,21 @@ import { useFormik } from 'formik'
 import validationSchema from '../validations/loginValidations'
 import Link from 'next/link'
 import Image from 'next/image'
+import { login } from '../api/auth'
 
 export default function Login() {
 
 
-  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, dirty } = useFormik({
     initialValues:{
       email:'',
       password:''
     },
-    onSubmit:values=>{
-      console.log(values);
+    onSubmit:(values,{resetForm,setSubmitting})=>{
+      //console.log(values);
+      login(values);
+      resetForm();
+      setSubmitting(false);
     },
     validationSchema,
   })
@@ -80,16 +84,15 @@ export default function Login() {
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="text-sm">
-            <Link href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <Link href="#" className="text-blue-600 hover:underline dark:text-blue-500">
               Şifrenizi mi unuttunuz?
             </Link>
-          </div>
-          <div className="text-sm">
-            <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-              Henüz bir hesabın yok mu? Kaydol
-            </Link>
-          </div>
+          </span>
+          <span className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            Henüz bir hesabın yok mu? {' '}
+            <Link href ="/register" className="text-blue-600 hover:underline dark:text-blue-500">Kaydol</Link>
+          </span>{' '}
         </div>
 
         <div>

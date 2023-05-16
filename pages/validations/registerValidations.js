@@ -9,7 +9,7 @@ const registerValidations=Yup.object().shape({
     city:Yup.string().required("İl seçiniz"),
     district:Yup.string().required("İlçe seçiniz"),
     email:Yup.string().email("Geçerli bir e-posta adresi giriniz").required("E-posta boş bırakılamaz"),
-    password:Yup.string().min(5,"Şifre en az 5 karakter olmalıdır").required("Şifre boş bırakılamaz"),
+    password:Yup.string().min(8,"Şifre en az 8 karakter olmalıdır").required("Şifre boş bırakılamaz"),
     passwordConfirm:Yup.string().oneOf([Yup.ref('password')],"Şifreler uyuşmuyor").required("Şifreyi tekrarlayınız"),
   })
 
