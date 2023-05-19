@@ -15,11 +15,18 @@ import {
 import { useFormik } from 'formik';
 import validationSchema from '../validations/editProfileValidations';
 import { getAllCities, getDistrictsByCityId } from '../api/province'
+import { useAuth } from '../contexts/authContext';
+import { getUserDetailById, updateUserDetails } from '../api/users';
+import { useRouter } from 'next/router';
 
 export default function EditProfile() {
   const [preview, setPreview] = useState(null);
   const [cities, setCities]=useState([])
   const [districts, setDistricts]=useState([])
+  const [userDetails, setUserDetails]=useState([])
+  const {user}=useAuth();
+  const router = useRouter()
+  const { id } = router.query
 
   useEffect(()=>{
     getAllCities().then(data => {
@@ -29,6 +36,17 @@ export default function EditProfile() {
     });
   },[])
 
+  useEffect(()=>{
+    if(id){
+      getUserDetailById(id).then(data => {
+        setUserDetails(data);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  },[id])
+
+  
   const handleFileChange = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
     setFieldValue("profileImage", file);
@@ -42,24 +60,24 @@ export default function EditProfile() {
 
   const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty,setFieldValue } = useFormik({
     initialValues:{
-      profileImage:null,
-      personalWebsite:'',
-      instagram:'',
-      linkedin:'',
-      firstName:'',
-      lastName:'',
-      taskDefinition:'',
-      birthdate:'',
-      phone:'',
-      gender:'',
-      city:'',
-      district:'',
-      email:'',
-      password:'',
-      about:'',
+      profileImage:user?.detail.image_path,
+      personalWebsite:user?.detail.portfolio_url,
+      instagram:user?.detail.instagram_url,
+      linkedin:user?.detail.linkedin_url,
+      fullname:user?.name,
+      taskDefinition:user?.detail.task_definition,
+      birthdate:user?.detail.birthdate,
+      phone:user?.detail.phone_number,
+      gender:user?.detail.gender,
+      city:user?.detail.city_id,
+      district:user?.detail.district_id,
+      email:user?.email,
+      password:"",
+      about:user?.detail.user_about,
     },
-    onSubmit:values=>{
-      console.log(values);
+    onSubmit:(values,{resetForm})=>{
+      updateUserDetails(values,id);
+      resetForm();
     },
     validationSchema,
   })
@@ -134,11 +152,7 @@ export default function EditProfile() {
                   <MDBCard className="mb-4">
                     <MDBCardBody>
                       <MDBRow>
-                      <input type="text" name="firstName" id="firstName" placeholder="Ad" value={values.firstName} onChange={handleChange} onBlur={handleBlur} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                      </MDBRow>
-                      <hr />
-                      <MDBRow>
-                      <input type="text" name="lastName" id="lastName" placeholder="Soyad" value={values.lastName} onChange={handleChange} onBlur={handleBlur} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                      <input type="text" name="fullname" id="fullname" placeholder="Ad Soyad" value={values.fullname} onChange={handleChange} onBlur={handleBlur} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                       </MDBRow>
                       <hr/>
                       <MDBRow>

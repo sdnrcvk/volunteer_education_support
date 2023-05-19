@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaGlobe, FaLinkedin, FaEdit, FaInstagram } from "react-icons/fa";
 import Head from 'next/head'
 import Layout from '@/components/Layout'
@@ -14,9 +13,11 @@ import {
     MDBListGroupItem,
   } from 'mdb-react-ui-kit';
 import Link from 'next/link';
-  
+import { useAuth } from '../contexts/authContext';
 
 export default function Profile() {
+  const {user}=useAuth();
+
   return (
     <>
     <Head>
@@ -33,7 +34,7 @@ export default function Profile() {
               <h1 className="text-3xl font-bold tracking-tight text-gray-900">Profil  :</h1>
             </div>
         </div>
-      
+
       <div className="container py-4">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <MDBContainer>
@@ -47,9 +48,9 @@ export default function Profile() {
                       className="rounded-circle m-auto"
                       style={{ width: '150px' }}
                       fluid />
-                    <p className="text-muted mb-1 mt-2">Bilgisayar Mühendisi</p>
-                    <p className="text-muted mb-1">Tokat / Merkez</p>
-                    <Link href="/edit-profile/{id}" className="position-absolute" style={{ top: '10px', right: '10px' }}>
+                    <p className="text-muted mb-1 mt-2">{user ? user.detail.task_definition : " "}</p>
+                    <p className="text-muted mb-1">{user ? user.detail.city_id : " "} / {user ? user.detail.district_id : " "}</p>
+                    <Link href={"/edit-profile/"+user.id} className="position-absolute" style={{ top: '10px', right: '10px' }}>
                       <button className="rounded-md bg-amber-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-amber-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="button">
                         <FaEdit />
                       </button>
@@ -62,15 +63,15 @@ export default function Profile() {
                     <MDBListGroup  className="rounded-3">
                       <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                         <FaGlobe/>
-                        <MDBCardText>https://mdbootstrap.com</MDBCardText>
+                        <MDBCardText>{user ? user.detail.portfolio_url : " "}</MDBCardText>
                       </MDBListGroupItem>
                       <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                         <FaInstagram/>
-                        <MDBCardText>mdbootstrap</MDBCardText>
+                        <MDBCardText>{user ? user.detail.instagram_url : " "}</MDBCardText>
                       </MDBListGroupItem>
                       <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                         <FaLinkedin/>
-                        <MDBCardText>mdbootstrap</MDBCardText>
+                        <MDBCardText>{user ? user.detail.linkedin_url : " "}</MDBCardText>
                       </MDBListGroupItem>
                     </MDBListGroup>
                   </MDBCardBody>
@@ -84,7 +85,7 @@ export default function Profile() {
                         <MDBCardText>Ad Soyad</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">Sedanur Çevik</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.name : " "}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <hr />
@@ -93,7 +94,7 @@ export default function Profile() {
                         <MDBCardText>Doğum Tarihi</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">18.04.1999</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.detail.birthdate : " "}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <hr />
@@ -102,7 +103,7 @@ export default function Profile() {
                         <MDBCardText>Telefon</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">0545 *** ** **</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.detail.phone_number : " "}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <hr />
@@ -111,7 +112,7 @@ export default function Profile() {
                         <MDBCardText>Cinsiyet</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">Kadın</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.detail.gender : " "}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <hr />
@@ -120,7 +121,7 @@ export default function Profile() {
                         <MDBCardText>İl / İlçe</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">Tokat / Merkez</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.detail.city_id : " "} / {user ? user.detail.district_id : " "}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <hr />
@@ -129,18 +130,18 @@ export default function Profile() {
                         <MDBCardText>Email</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">sdnrcvk@gmail.com</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.email : " "}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
                     <hr />
-                    <MDBRow>
+                    {/* <MDBRow>
                       <MDBCol sm="3">
                         <MDBCardText>Şifre</MDBCardText>
                       </MDBCol>
                       <MDBCol sm="9">
-                        <MDBCardText className="text-muted">*******</MDBCardText>
+                        <MDBCardText className="text-muted">{user ? user.password : " "}</MDBCardText>
                       </MDBCol>
-                    </MDBRow>
+                    </MDBRow> */}
                   </MDBCardBody>
                 </MDBCard>
 
@@ -150,13 +151,7 @@ export default function Profile() {
                       <MDBCardBody>
                         <MDBCardText className="mb-3 text-center" style={{ fontSize:"larger" }}><b>Hakkımda</b></MDBCardText>
                         <MDBCardText className="mb-1">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nemo, sunt nesciunt unde tempore doloremque dolorem repellat fugiat cum omnis dolor eveniet delectus voluptatibus accusamus. Dolorem molestiae temporibus fugit voluptate!
-                            Distinctio, illo enim facilis quibusdam officia nulla illum nostrum aut, doloribus at voluptate sequi debitis pariatur corrupti consequatur quasi totam! Ipsum ad nemo in eos doloribus vel sed quod eligendi?
-                            Quam at repudiandae hic maxime facere eveniet provident harum est, nulla atque in voluptatibus maiores id quibusdam nostrum explicabo sint laudantium? Non sapiente, vero enim dolor amet doloremque vel voluptatibus?
-                            Velit maiores recusandae itaque sunt modi quaerat ad? Cumque fugit facilis facere rerum inventore corporis adipisci ea ducimus ipsa accusamus, libero obcaecati doloremque minus, magnam eveniet repellendus tempore, veritatis enim.
-                            Atque similique nam recusandae ut eius vel voluptatem dolore, voluptatum tempore sapiente sed cupiditate sint accusamus. Ad pariatur fugit deleniti, doloremque, officiis esse repellendus numquam ut maxime excepturi sequi. Necessitatibus.
-                            Repellat, debitis cumque! Magnam quibusdam, voluptatum incidunt unde, soluta quos cumque at aut enim dicta placeat vel numquam! Maiores quam neque fuga nostrum deserunt aperiam illum est, distinctio perspiciatis nam.
-                            Quibusdam delectus consectetur voluptas animi optio culpa quasi reprehenderit cumque hic laborum sed accusantium, eos, impedit quos sit quas perferendis, laboriosam modi facilis ipsa corporis ratione amet deserunt. At, quo?
+                        {user ? user.detail.user_about : " "}
                         </MDBCardText>
                       </MDBCardBody>
                     </MDBCard>
