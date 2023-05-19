@@ -2,30 +2,30 @@ import axios from 'axios';
 import { api_url } from './hello';
 import Swal from 'sweetalert2'
 
-export const login = async (values) => {
-    try {
-        const response = await axios.post(api_url+`/login`,{
-            email: values.email,
-            password:values.password
-        });
-        console.log(response.data);
-        return response.data.data;
-    } catch (error) {
-        console.error(error);
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            text: "Giriş yapılırken hata oluştu. " +
-            "Hata :"+JSON.stringify(error.response.data.errors),
-            showConfirmButton: false,
-        })
-    }
-};
+// export const login = async (values) => {
+//     try {
+//         const response = await axios.post(api_url+`/login`,{
+//             email: values.email,
+//             password:values.password
+//         });
+//         console.log(response.data);
+//         return response.data.data;
+//     } catch (error) {
+//         console.error(error);
+//         Swal.fire({
+//             position: 'top-end',
+//             icon: 'error',
+//             text: "Giriş yapılırken hata oluştu. " +
+//             "Hata :"+JSON.stringify(error.response.data.errors),
+//             showConfirmButton: false,
+//         })
+//     }
+// };
 
 export const register = async (values) => {
     try {
         const response = await axios.post(api_url+`/users`,{
-            name : values.firstName+""+values.lastName,
+            name : values.firstName+" "+values.lastName,
             email:values.email,
             password:values.password,
             // portfolio_url:"erggr",
