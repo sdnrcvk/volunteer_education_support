@@ -5,6 +5,7 @@ import {
     MDBRow,
     MDBCardBody,
 } from 'mdb-react-ui-kit';
+import { addCategory } from "@/pages/api/categories";
 
 export default function AddCategoryModal() {
 
@@ -12,8 +13,9 @@ export default function AddCategoryModal() {
         initialValues:{
             categoryName:'',
         },
-        onSubmit:values=>{
-            console.log(values);
+        onSubmit:(values,{resetForm})=>{
+            addCategory(values);
+            resetForm();
         },
         validationSchema,
     })
