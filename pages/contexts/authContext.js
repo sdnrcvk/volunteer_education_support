@@ -10,8 +10,8 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-          setUser(JSON.parse(localStorage.getItem('user')) || " ");
-          setToken(JSON.parse(localStorage.getItem('token')) || " ");
+          setUser(JSON.parse(localStorage.getItem('user')) || null);
+          setToken(JSON.parse(localStorage.getItem('token')) || null);
       }, []);
 
     const login = async (values) => {

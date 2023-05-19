@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { LockClosedIcon,ArrowLeftCircleIcon } from '@heroicons/react/20/solid'
 import { useFormik } from 'formik'
 import validationSchema from '../validations/loginValidations'
 import Link from 'next/link'
 import Image from 'next/image'
-import { login } from '../api/auth'
+import {useAuth } from '../contexts/authContext'
 
 export default function Login() {
-
+  const { login }=useAuth();
 
   const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, dirty } = useFormik({
     initialValues:{

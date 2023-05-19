@@ -6,9 +6,11 @@ import { ArrowRightOnRectangleIcon, Cog6ToothIcon, UserIcon, DocumentDuplicateIc
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAuth } from '@/pages/contexts/authContext'
 
 export default function Navbar() {
   const router = useRouter();
+  const {user, logout}=useAuth();
 
   const navigation = [
     { name: 'Ana Sayfa', href: '/', current: router.pathname === '/' },
@@ -74,15 +76,18 @@ export default function Navbar() {
               
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* Login-Register Butonları */}
-                {/* <div className='flex items-center justify-center'>
+                {/* Login-Register Buttons */}
+                {!user && (
+                <div className='flex items-center justify-center'>
                   <div className="border w-fit rounded-xl shadow-sm">
                       <Link href={"/login"} className="px-2 py-2 rounded-l-xl text-white m-0 bg-sky-900	hover:bg-sky-800 transition">Giriş Yap</Link>
                       <Link href={"/register"} className="px-2 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition">Üye Ol</Link>
                   </div>
-                </div> */}
-                
+                </div>
+                )}
+
                 {/* Profile dropdown */}
+                {user && (
                 <Menu as="div" className="relative ml-3 z-40">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -107,7 +112,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/profile/{id}"
+                            href={"/profile/"+user.id}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
@@ -137,7 +142,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/given-courses/{id}"
+                            href={"/given-courses/"+user?.id}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
@@ -152,7 +157,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/received-courses/{id}"
+                            href={"/received-courses/"+user?.id}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
@@ -170,6 +175,7 @@ export default function Navbar() {
                           <Link
                             href="/"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            onClick={logout}
                           >
                             <span className="inline-block align-middle">
                               <ArrowRightOnRectangleIcon className="h-5" aria-hidden="true" />
@@ -183,6 +189,7 @@ export default function Navbar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                )}
               </div>
             </div>
           </div>
