@@ -10,9 +10,12 @@ import { useFormik } from "formik";
 import { getAllCategories } from "@/pages/api/categories";
 import { useState, useEffect } from "react";
 import validationSchema from "@/pages/validations/addCourseValidations";
+import { getCourseDetailByCourseId, updateCourse } from "@/pages/api/courses";
 
-export default function EditCourseDetailModal() {
+export default function EditCourseDetailModal({courseId}) {
     const [categories, setCategories]=useState([])
+    const [courseDetail,setCourseDetail]=useState()
+
 
     useEffect(()=>{
         getAllCategories().then(data => {
@@ -22,15 +25,36 @@ export default function EditCourseDetailModal() {
         });
     },[])
   
+    useEffect(()=>{
+        if(courseId){
+          getCourseDetailByCourseId(courseId).then(data => {
+            setCourseDetail(data);
+          }).catch(err => {
+            console.log(err);
+          });
+        }
+      },[courseId])
 
-    const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
+      useEffect(() => {
+        if (courseDetail) {
+            resetForm({
+                values: {
+                    courseTitle: courseDetail.title || "",
+                    category: courseDetail.category_id || "",
+                    description: courseDetail.description || ""
+                }
+            });
+        }
+    }, [courseDetail]);
+
+    const { handleSubmit, handleChange, values, errors, touched, handleBlur, resetForm } = useFormik({
         initialValues:{
-            courseTitle:'',
-            category:'',
-            description:'',
+            courseTitle:"",
+            category:"",
+            description:"" ,
         },
         onSubmit:values=>{
-            console.log(values);
+            updateCourse(values,courseId);
         },
         validationSchema,
     })

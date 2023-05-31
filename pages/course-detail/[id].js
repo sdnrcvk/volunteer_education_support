@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import EditCourseDetailModal from '@/components/EditCourseDetailModal';
 import Layout from '@/components/Layout';
+import { useRouter } from 'next/router';
+import { getCourseDetailByCourseId } from '../api/courses';
 
 export default function CourseDetail() {
+  const [courseDetail,setCourseDetail]=useState()
+  const router = useRouter()
+  const { id } = router.query
+
+
+  useEffect(()=>{
+    if(id){
+      getCourseDetailByCourseId(id).then(data => {
+        setCourseDetail(data);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  },[id])
+  
   return (
     <>
     <Head>
@@ -21,8 +38,8 @@ export default function CourseDetail() {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"/>
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">Sedanur Çevik</h2>
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">LGS Hazırlık Matematik Dersi</h1>
+              <h2 className="text-sm title-font text-gray-500 tracking-widest">{courseDetail?.user_id}</h2>
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{courseDetail?.title}</h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
@@ -44,29 +61,13 @@ export default function CourseDetail() {
                 </span>
                 <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
                   <a className="text-gray-500">
-                    Matematik
+                    {courseDetail?.category_id}
                   </a>
                 </span>
               </div>
               <p className="leading-relaxed">
-                Merhaba!
-                Ben, matematik konusunda uzmanlaşmış deneyimli bir öğretmenim ve özel ders hizmeti sunuyorum. Matematik derslerinde zorlanan öğrencilere yardım etmek, onların matematik becerilerini geliştirmek ve başarılarını artırmak benim tutkumdur.
-
-                Derslerim, ilkokul, ortaokul ve lise düzeyindeki öğrencilere yöneliktir. Aşağıdaki konuları kapsayan kapsamlı bir müfredat sunuyorum:
+                {courseDetail?.description}
               </p>
-              <ul className="leading-relaxed list-disc ml-6">
-                  <li>Temel matematik kavramları</li>
-                  <li>Cebir</li>
-                  <li>Geometri</li>
-                  <li>Trigonometri</li>
-                  <li>Fonksiyonlar</li>
-                  <li>İstatistik ve olasılık</li>
-                  <li>Türev ve integral (lise düzeyi)</li>
-                </ul>
-              <p>
-                Özel derslerim, öğrencinin seviyesine ve ihtiyaçlarına göre özelleştirilmiştir. Öğrencilerin eksik oldukları konuları belirler, kuvvetli yönlerini destekler ve onlara güvenli bir matematik temeli oluştururum. Ayrıca, öğrencilere test teknikleri, problemleri çözme stratejileri ve sınav hazırlığı konusunda da rehberlik ederim.
-
-                Derslerim, öğrencilerin evlerinde, online veya uygun bir yerde gerçekleştirilebilir. Esnek zamanlar sunuyorum ve ders saatlerini öğrencilerin ve velilerin programlarına göre ayarlayabilirim.</p>
               <div className="flex mt-6 items-center pt-2 border-t-2 border-gray-200">
                 <span className="title-font font-medium text-2xl text-gray-900">0 ₺</span>
                 <a href="mailto:sdnrcvk@gmail.com" className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">İletişime Geç</a>
@@ -75,7 +76,7 @@ export default function CourseDetail() {
                     <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                   </svg>
                 </button>
-                <EditCourseDetailModal/>
+                <EditCourseDetailModal courseId={id}/>
               </div>
             </div>
           </div>

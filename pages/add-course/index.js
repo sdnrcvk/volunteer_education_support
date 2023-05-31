@@ -12,9 +12,12 @@ import AddCategoryModal from '@/components/AddCategoryModal';
 import { getAllCategories } from '../api/categories';
 import { useFormik } from 'formik';
 import validationSchema from '../validations/addCourseValidations';
+import { addCourse } from '../api/courses';
+import { useAuth } from '../contexts/authContext';
 
 export default function AddCourse() {
   const [categories, setCategories]=useState([])
+  const { user }=useAuth();
 
   useEffect(()=>{
     getAllCategories().then(data => {
@@ -24,14 +27,15 @@ export default function AddCourse() {
     });
   },[])
 
-  const { handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting, setSubmitting, resetForm, dirty } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched, handleBlur } = useFormik({
     initialValues:{
       courseTitle:'',
       category:'',
       description:'',
     },
-    onSubmit:values=>{
-      console.log(values);
+    onSubmit:(values,{resetForm})=>{
+      addCourse(values,user?.id);
+      resetForm();
     },
     validationSchema,
   })
@@ -64,7 +68,7 @@ export default function AddCourse() {
                           <MDBCard className="mb-4">
                           <MDBCardBody className="text-center">
                               <div className="mx-auto flex flex-wrap">
-                              <img alt="ecommerce" className="mx-auto object-cover object-center rounded border border-gray-200" src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"/>
+                              <img alt="ecommerce" className="mx-auto object-cover object-center rounded border border-gray-200" src="https://images.unsplash.com/photo-1588702547981-5f8fed370e68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"/>
                               </div>
                           </MDBCardBody>
                           </MDBCard>

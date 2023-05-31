@@ -6,10 +6,12 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { getAllCategories } from '../api/categories'
+import { getAllCourses } from '../api/courses'
 
 export default function Courses() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [categories, setCategories]=useState([])
+  const [courses, setCourses]=useState([])
 
   useEffect(()=>{
     getAllCategories().then(data => {
@@ -19,72 +21,14 @@ export default function Courses() {
     });
   },[])
 
-  const products = [
-    {
-      id: 1,
-      name: 'Earthen Bottle',
-      href: '/course-detail/{id}',
-      price: '$48',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    },
-    {
-      id: 2,
-      name: 'Nomad Tumbler',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    },
-    {
-      id: 3,
-      name: 'Focus Paper Refill',
-      href: '/course-detail/{id}',
-      price: '$89',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 5,
-      name: 'Machined Mechanical Pencil',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 6,
-      name: 'Focus Paper Refill',
-      href: '/course-detail/{id}',
-      price: '$89',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    },
-    {
-      id: 7,
-      name: 'Nomad Tumbler',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    },
-    {
-      id: 8,
-      name: 'Earthen Bottle',
-      href: '/course-detail/{id}',
-      price: '$48',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    }
-  ]
+  useEffect(()=>{
+    getAllCourses().then(data => {
+      setCourses(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },[])
+
 
   const sortOptions = [
     { name: 'En Beğenilenler', href: '#', current: false },
@@ -93,31 +37,6 @@ export default function Courses() {
     { name: 'En Yeniler', href: '#', current: false },
   ]
   
-  // const filters = [
-  //   {
-  //     id: 'category',
-  //     name: 'Category',
-  //     options: [
-  //       { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-  //       { value: 'sale', label: 'Sale', checked: false },
-  //       { value: 'travel', label: 'Travel', checked: true },
-  //       { value: 'organization', label: 'Organization', checked: false },
-  //       { value: 'accessories', label: 'Accessories', checked: false },
-  //     ],
-  //   },
-  //   {
-  //     id: 'size',
-  //     name: 'Size',
-  //     options: [
-  //       { value: '2l', label: '2L', checked: false },
-  //       { value: '6l', label: '6L', checked: false },
-  //       { value: '12l', label: '12L', checked: false },
-  //       { value: '18l', label: '18L', checked: false },
-  //       { value: '20l', label: '20L', checked: false },
-  //       { value: '40l', label: '40L', checked: true },
-  //     ],
-  //   },
-  // ]
   
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -277,17 +196,17 @@ export default function Courses() {
                     <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
                       <h2 className="sr-only">Özel Dersler</h2>
                       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                        {products.map((product) => (
-                          <Link key={product.id} href={product.href} className="group">
+                        {courses.map((course) => (
+                          <Link key={course.id} href={"/course-detail/"+course.id} className="group">
                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                               <img
-                                src={product.imageSrc}
-                                alt={product.imageAlt}
+                                src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                                alt="course image"
                                 className="h-full w-full object-cover object-center group-hover:opacity-75"
                               />
                             </div>
-                            <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                            <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+                            <h3 className="mt-4 text-sm text-gray-700">{course.title}</h3>
+                            <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
                           </Link>
                         ))}
                       </div>
