@@ -12,6 +12,15 @@ export const getAllCourses = async () => {
     }
 };
 
+export const getCoursesByUserId = async (id) => {
+    try {
+      const response = await axios.get(api_url+`/courses/${id}`);
+      return response.data.courses;
+    } catch (error) {
+      console.error(error);
+    }
+};
+
 export const getCourseDetailByCourseId = async (id) => {
     try {
       const response = await axios.get(api_url+`/course/${id}`);

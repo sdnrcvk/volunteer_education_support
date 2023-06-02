@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { api_url } from './hello';
+import Swal from 'sweetalert2';
 
 export const getAllCategories = async () => {
   try {
@@ -28,9 +29,23 @@ export const getCategoryById = async (id) => {
             is_confirm:false,
         });
         console.log(response.data);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          text: "Kategori eklendi",
+          showConfirmButton: false,
+          timer: 1000
+      })
         return response.data.data;
     } catch (error) {
         console.error(error);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          text: "Kategori ekleme sırasında hata oluştu. " +
+          "Hata :"+JSON.stringify(error.response.data.error),
+          showConfirmButton: false,
+      })
     }
 };
 

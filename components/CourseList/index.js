@@ -5,10 +5,18 @@ import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getAllCategories } from '@/pages/api/categories'
+import { getCoursesByUserId } from '@/pages/api/courses'
+import { useAuth } from '@/pages/contexts/authContext'
+import { getReceivedCoursesByUserId } from '@/pages/api/receivedCourses'
+import { FaTrash } from "react-icons/fa";
 
 export default function CourseList() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [categories, setCategories]=useState([])
+  const [courses,setCourses]=useState([])
+  const {user}=useAuth();
+
+  const pagePath=useRouter().pathname;
 
   useEffect(()=>{
     getAllCategories().then(data => {
@@ -18,74 +26,25 @@ export default function CourseList() {
     });
   },[])
 
-  const pagePath=useRouter().pathname;
-
-  const products = [
-    {
-      id: 1,
-      name: 'Earthen Bottle',
-      href: '/course-detail/{id}',
-      price: '$48',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    },
-    {
-      id: 2,
-      name: 'Nomad Tumbler',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    },
-    {
-      id: 3,
-      name: 'Focus Paper Refill',
-      href: '/course-detail/{id}',
-      price: '$89',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    },
-    {
-      id: 4,
-      name: 'Machined Mechanical Pencil',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 5,
-      name: 'Machined Mechanical Pencil',
-      href: '/course-detail/{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-      imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    },
-    {
-      id: 6,
-      name: 'Focus Paper Refill',
-      href: '/course-detail/{id}',
-      price: '$89',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-      imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    },
-    {
-      id: 7,
-      name: 'Nomad Tumbler',
-      href: '/course-detail{id}',
-      price: '$35',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-      imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    },
-    {
-      id: 8,
-      name: 'Earthen Bottle',
-      href: '/course-detail/{id}',
-      price: '$48',
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-      imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
+  useEffect(() => {
+    if (pagePath === "/given-courses/[id]") {
+      // Verilen dersleri getirmek için API çağrısı
+      getCoursesByUserId(user.detail.id).then(data => {
+        setCourses(data);
+      }).catch(err => {
+        console.log(err);
+      });
+    } else if (pagePath === "/received-courses/[id]") {
+      // Alınan dersleri getirmek için farklı bir API çağrısı
+      getReceivedCoursesByUserId(user.detail.id).then(data => {
+        console.log(data);
+        setCourses(data);
+      }).catch(err => {
+        console.log(err);
+      });
     }
-  ]
+  }, [pagePath, user]);
+  
 
   const sortOptions = [
     { name: 'En Beğenilenler', href: '#', current: false },
@@ -93,32 +52,6 @@ export default function CourseList() {
     { name: 'En Popüler', href: '#', current: false },
     { name: 'En Yeniler', href: '#', current: false },
   ]
-  
-  // const filters = [
-  //   {
-  //     id: 'category',
-  //     name: 'Category',
-  //     options: [
-  //       { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-  //       { value: 'sale', label: 'Sale', checked: false },
-  //       { value: 'travel', label: 'Travel', checked: true },
-  //       { value: 'organization', label: 'Organization', checked: false },
-  //       { value: 'accessories', label: 'Accessories', checked: false },
-  //     ],
-  //   },
-  //   {
-  //     id: 'size',
-  //     name: 'Size',
-  //     options: [
-  //       { value: '2l', label: '2L', checked: false },
-  //       { value: '6l', label: '6L', checked: false },
-  //       { value: '12l', label: '12L', checked: false },
-  //       { value: '18l', label: '18L', checked: false },
-  //       { value: '20l', label: '20L', checked: false },
-  //       { value: '40l', label: '40L', checked: true },
-  //     ],
-  //   },
-  // ]
   
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -185,7 +118,7 @@ export default function CourseList() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
-            {pagePath==="/received-courses" ? (
+            {pagePath==="/received-courses/[id]" ? (
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900">Alınan Dersler</h1>
             ) : 
             (            
@@ -194,7 +127,7 @@ export default function CourseList() {
             <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                {pagePath==="/given-courses" && (
+                {pagePath==="/given-courses/[id]" && (
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 m-1">
                     <Link
                       href="/add-course"
@@ -272,28 +205,61 @@ export default function CourseList() {
                 </ul>
             </form>
 
-            {/* Product grid */}
+            {/*Given Courses */}
+            {pagePath === "/given-courses/[id]" && (
+            <div className="lg:col-span-3">
+                <div className="bg-white">
+                  <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
+                      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                      {courses.length > 0 ? courses.map((course) => (
+                          <Link key={course.id} href={"/course-detail/"+course.id}className="group">
+                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                              <img
+                              src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                              alt="course image"
+                              className="h-full w-full object-cover object-center group-hover:opacity-75"
+                              />
+                          </div>
+                          <h3 className="mt-4 text-sm text-gray-700">{course.title}</h3>
+                          <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
+                          </Link>
+                      )): (<p>Verdiğiniz ders bulunmamaktadır...</p>)}
+                      </div>
+                  </div>
+                </div>
+            </div>
+            )}
+
+            {/* Received Courses */}
+            {pagePath === "/received-courses/[id]" && (
             <div className="lg:col-span-3">
                 <div className="bg-white">
                 <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                    {products.length > 0 ? products.map((product) => (
-                        <Link key={product.id} href={product.href} className="group">
+                    {courses.length > 0 ? courses.map((course) => (
+                        <Link key={course.course.id} href={"/course-detail/"+course.course.id}className="group">
                         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                             <img
-                            src={product.imageSrc}
-                            alt={product.imageAlt}
+                            src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                            alt="course image"
                             className="h-full w-full object-cover object-center group-hover:opacity-75"
                             />
+                          <Link href={"/edit-profile/"+user.id} className="position-absolute">
+                            <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px' }} type="button">
+                              <FaTrash />
+                            </button>
+                          </Link>
                         </div>
-                        <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                        <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+                        <h3 className="mt-4 text-sm text-gray-700">{course.course.title}</h3>
+                        <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
                         </Link>
-                    )): (<p>Ders bulunmamaktadır...</p>)}
+                    )): (<p>Verdiğiniz ders bulunmamaktadır...</p>)}
                     </div>
                 </div>
                 </div>
             </div>
+            )}
+            
             </div>
         </section>
         </main>
