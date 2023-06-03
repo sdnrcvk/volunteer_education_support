@@ -23,7 +23,7 @@ export const addReceivedCourse = async (userId,courseId) => {
             position: 'top-end',
             icon: 'error',
             text: "Kurs ekleme sırasında hata oluştu. " +
-            "Hata :"+JSON.stringify(error.response.data.error),
+            "Hata :"+JSON.stringify(error.response.data),
             showConfirmButton: false,
         })
     }
@@ -37,5 +37,31 @@ export const getReceivedCoursesByUserId = async (id) => {
       console.error(error);
     }
 };
+
+export const deleteReceivedCourse = async (id) => {
+    try {
+        const response = await axios.delete(api_url+`/received-courses/${id}`);
+        console.log(response.data);
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            text: "Kurs alınanlardan kaldırıldı",
+            showConfirmButton: false,
+            timer: 1000
+        })
+        window.location.reload();
+        return response.data.data;
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            text: "Kurs kaldırma sırasında hata oluştu. " +
+            "Hata :"+JSON.stringify(error.response.data),
+            showConfirmButton: false,
+        })
+    }
+};
+
 
 
