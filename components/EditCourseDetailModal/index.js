@@ -62,7 +62,7 @@ export default function EditCourseDetailModal({courseId}) {
   return (
     <>
     {/* <!-- Modal toggle --> */}
-    <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center hover:bg-gray-300 hover:text-amber-500 text-gray-500 ml-4" type="button">
+    <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="rounded-full w-10 h-10 bg-amber-200 p-0 border-0 inline-flex items-center justify-center hover:bg-amber-300 hover:text-amber-500 text-gray-500 ml-4" type="button">
         <FaEdit className="w-5 h-5"/>
     </button>
     

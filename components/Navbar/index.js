@@ -127,14 +127,17 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="#"
+                          href={"/courses-admin"}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
                               <Cog6ToothIcon className="h-5" aria-hidden="true" />
                             </span>
                             <span className="inline-block align-middle ml-2">
-                              Ayarlar
+                              Onaylanmamış
+                            </span>
+                            <span className="inline-block align-middle ml-2">
+                              Dersler
                             </span>
                           </Link>
                         )}

@@ -6,7 +6,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { getAllCategories } from '../api/categories'
-import { getAllCourses } from '../api/courses'
+import { getAllConfirmedCourses } from '../api/courses'
 
 export default function Courses() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -22,7 +22,7 @@ export default function Courses() {
   },[])
 
   useEffect(()=>{
-    getAllCourses().then(data => {
+    getAllConfirmedCourses().then(data => {
       setCourses(data);
     }).catch(err => {
       console.log(err);
