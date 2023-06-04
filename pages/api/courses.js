@@ -12,6 +12,24 @@ export const getAllCourses = async () => {
     }
 };
 
+export const getAllUnconfirmedCourses = async () => {
+  try {
+    const response = await axios.get(api_url+`/courses-unconfirmed`);
+    return response.data.courses;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllConfirmedCourses = async () => {
+  try {
+    const response = await axios.get(api_url+`/courses-confirmed`);
+    return response.data.courses;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getCoursesByUserId = async (id) => {
     try {
       const response = await axios.get(api_url+`/courses/${id}`);
@@ -69,7 +87,7 @@ export const updateCourse = async (values,id) => {
           //user_id:userId,
           category_id:values.category,
           image_path:"https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-          is_confirm:false
+          //is_confirm:false
       });
       Swal.fire({
           position: 'top-end',
@@ -79,6 +97,32 @@ export const updateCourse = async (values,id) => {
           timer: 1000
       })
         Router.reload(window.location.pathname);
+        return response.data.data;
+  } catch (error) {
+      console.error(error);
+      Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          text: "Ders güncelleme sırasında hata oluştu. " +
+          "Hata :"+JSON.stringify(error.response.data.message),
+          showConfirmButton: false,
+      })
+  }
+};
+
+export const confirmCourse = async (id) => {
+  try {
+      const response = await axios.put(api_url+`/courses/${id}/confirm`,{
+        is_confirm:true
+      });
+      Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          text: "Ders güncellendi",
+          showConfirmButton: false,
+          timer: 1000
+      })
+        document.location="/courses-admin"
         return response.data.data;
   } catch (error) {
       console.error(error);
