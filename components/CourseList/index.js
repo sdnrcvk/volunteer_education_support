@@ -219,6 +219,11 @@ export default function CourseList() {
                               alt="course image"
                               className="h-full w-full object-cover object-center group-hover:opacity-75"
                               />
+                            <Link href={"#"} className="position-absolute">
+                              <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px'}} type="button" onClick={()=>deleteReceivedCourse(course.id)}>
+                                <FaTrash />
+                              </button>
+                            </Link>
                           </div>
                           <h3 className="mt-4 text-sm text-gray-700">{course.title}</h3>
                           <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
