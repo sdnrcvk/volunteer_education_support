@@ -48,6 +48,7 @@ export const register = async (values) => {
             showConfirmButton: false,
             timer: 1000
         })
+        document.location="/login"
         return response.data.data;
     } catch (error) {
         console.error(error);

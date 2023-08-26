@@ -1,11 +1,14 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import Swal from "sweetalert2";
+import { useRouter } from 'next/router'
 import axios from "axios";
 import { api_url } from "../api/hello";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    const router = useRouter()
+
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
 
@@ -24,6 +27,7 @@ export const AuthProvider = ({ children }) => {
             setUser(userData);
             localStorage.setItem('user', JSON.stringify(userData.user));
             localStorage.setItem('token', JSON.stringify(userData.token));
+            router.push("/");
             return response.data;
         } catch (error) {
             console.error(error);
@@ -40,7 +44,8 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         setUser(null);
         localStorage.clear();
-        document.location="/"
+        //document.location="/"
+        router.push("/");
     };
 
     const authContextValues = { user, login, logout };
