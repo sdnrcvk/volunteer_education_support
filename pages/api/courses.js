@@ -39,6 +39,24 @@ export const getCoursesByUserId = async (id) => {
     }
 };
 
+export const getConfirmedCoursesByUser = async (id) => {
+  try {
+    const response = await axios.get(api_url+`/courses-confirmed/${id}`);
+    return response.data.courses;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUnconfirmedCoursesByUser = async (id) => {
+  try {
+    const response = await axios.get(api_url+`/courses-unconfirmed/${id}`);
+    return response.data.courses;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getCourseDetailByCourseId = async (id) => {
     try {
       const response = await axios.get(api_url+`/course/${id}`);
@@ -131,6 +149,31 @@ export const confirmCourse = async (id) => {
           icon: 'error',
           text: "Ders güncelleme sırasında hata oluştu. " +
           "Hata :"+JSON.stringify(error.response.data.message),
+          showConfirmButton: false,
+      })
+  }
+};
+
+export const deleteGivenCourse = async (id) => {
+  try {
+      const response = await axios.delete(api_url+`/courses/${id}`);
+      console.log(response.data);
+      Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          text: "Kurs kaldırıldı",
+          showConfirmButton: false,
+          timer: 1000
+      })
+      window.location.reload();
+      return response.data.data;
+  } catch (error) {
+      console.error(error);
+      Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          text: "Kurs kaldırma sırasında hata oluştu. " +
+          "Hata :"+JSON.stringify(error.response.data),
           showConfirmButton: false,
       })
   }
