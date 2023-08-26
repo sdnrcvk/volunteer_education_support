@@ -50,7 +50,7 @@ export default function Profile() {
                       fluid />
                     <p className="text-muted mb-1 mt-2">{user ? user.detail.task_definition : " "}</p>
                     <p className="text-muted mb-1">{user ? user.detail.city_id : " "} / {user ? user.detail.district_id : " "}</p>
-                    <Link href={"/edit-profile/"+user.id} className="position-absolute" style={{ top: '10px', right: '10px' }}>
+                    <Link href={user ? "/edit-profile/" + user.id : "/"} className="position-absolute" style={{ top: '10px', right: '10px' }}>
                       <button className="rounded-md bg-amber-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-amber-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" type="button">
                         <FaEdit />
                       </button>
