@@ -1,7 +1,19 @@
-import React from 'react'
+import { getAllCategories } from '@/pages/api/categories';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react'
 import { FaTwitter, FaLinkedin, FaGithub, FaGoogle, FaInstagram ,FaMedium, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
+  const [categories, setCategories]=useState([])
+
+  useEffect(()=>{
+    getAllCategories().then(data => {
+      setCategories(data);
+    }).catch(err => {
+      console.log(err);
+    });
+  },[])
+
   return (
     <footer className="text-center text-lg-start text-light" style={{backgroundColor:"#0B2447"}}>
 
@@ -22,13 +34,13 @@ export default function Footer() {
                 Sayfalar
               </h6>
               <p>
-                <a href="#!" className="text-reset">Ana Sayfa</a>
+                <Link href={"/"} className="text-reset">Ana Sayfa</Link>
               </p>
               <p>
-                <a href="#!" className="text-reset">Özel Dersler</a>
+                <Link href={"/courses"} className="text-reset">Özel Dersler</Link>
               </p>
               <p>
-                <a href="#!" className="text-reset">Bize Ulaşın</a>
+                <Link href={"/contact"} className="text-reset">Bize Ulaşın</Link>
               </p>
             </div>
     
@@ -36,29 +48,22 @@ export default function Footer() {
               <h6 className="text-uppercase fw-bold mb-4">
                 KATEGORİLER
               </h6>
-              <p>
-                <a href="#!" className="text-reset">Türkçe</a>
-              </p>
-              <p>
-                <a href="#!" className="text-reset">Matematik</a>
-              </p>
-              <p>
-                <a href="#!" className="text-reset">Sosyal Bilimler</a>
-              </p>
-              <p>
-                <a href="#!" className="text-reset">Fen Bilimleri</a>
-              </p>
+              {categories?.map((category) => (
+                <p key={category.id}>
+                  <Link href={"#!"} className="text-reset">
+                    {category.category_name}
+                  </Link>
+                </p>
+              ))}
             </div>
     
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               <h6 className="text-uppercase fw-bold mb-4">İLETİŞİM</h6>
-              <p><i className="fas fa-home me-3"></i> New York, NY 10012, US</p>
+              <p><i className="fas fa-home"></i> İstanbul</p>
               <p>
-                <i className="fas fa-envelope me-3"></i>
+                <i className="fas fa-envelope"></i>
                 info@vedus.com
               </p>
-              <p><i className="fas fa-phone me-3"></i> + 01 234 567 88</p>
-              <p><i className="fas fa-print me-3"></i> + 01 234 567 89</p>
             </div>
           </div>
         </div>
