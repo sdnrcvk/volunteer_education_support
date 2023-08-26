@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/pages/contexts/authContext'
+import { InboxIcon } from '@heroicons/react/20/solid'
 
 export default function Navbar() {
   const router = useRouter();
@@ -17,6 +18,14 @@ export default function Navbar() {
     { name: 'Özel Dersler', href: '/courses', current: router.pathname === '/courses' },
     { name: 'Bize Ulaşın', href: '/contact', current: router.pathname === '/contact' },
   ]
+
+  if (user && user.detail && user.detail.user_type === "admin") {
+    navigation.splice(2, 0, { 
+      name: 'Onay Bekleyen Özel Dersler', 
+      href: '/courses-admin', 
+      current: router.pathname === '/courses-admin' 
+    });
+  }
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -41,14 +50,16 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Image className="block h-8 w-auto lg:hidden"
-                    src={"/logo.png"} width={1000} height={237}
-                    alt="Site Logosu"/>
-                  <Image
-                    className="hidden h-8 w-auto lg:block"
-                    src={"/logo.png"} width={1000} height={237}
-                    alt="Site Logosu"
-                  />
+                  <Link href={"/"}>
+                    <Image className="block h-8 w-auto lg:hidden"
+                      src={"/logo.png"} width={1000} height={237}
+                      alt="Site Logosu"/>
+                    <Image
+                      className="hidden h-8 w-auto lg:block"
+                      src={"/logo.png"} width={1000} height={237}
+                      alt="Site Logosu"
+                    />
+                  </Link> 
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -112,7 +123,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href={"/profile/"+user.id}
+                            href={user ? "/profile/"+user.id : "/"}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
@@ -124,54 +135,75 @@ export default function Navbar() {
                           </Link>
                         )}
                       </Menu.Item>
+                      {user && user.detail && user.detail.user_type === "admin" && (
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                          href={"/courses-admin"}
+                            href="/messages"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             <span className="inline-block align-middle">
-                              <Cog6ToothIcon className="h-5" aria-hidden="true" />
+                              <InboxIcon className="h-5" aria-hidden="true" />
                             </span>
                             <span className="inline-block align-middle ml-2">
-                              Onaylanmamış
-                            </span>
-                            <span className="inline-block align-middle ml-2">
-                              Dersler
+                              Mesajlar
                             </span>
                           </Link>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            href={"/given-courses/"+user?.id}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            <span className="inline-block align-middle">
-                              <DocumentArrowUpIcon className="h-5" aria-hidden="true" />
-                            </span>
-                            <span className="inline-block align-middle ml-2">
-                              Verilen Dersler
-                            </span>
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            href={"/received-courses/"+user?.id}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            <span className="inline-block align-middle">
-                              <DocumentDuplicateIcon className="h-5" aria-hidden="true" />
-                            </span>
-                            <span className="inline-block align-middle ml-2">
-                              Alınan Dersler
-                            </span>
-                          </Link>
-                        )}
-                      </Menu.Item>
+                      )}
+                      {user && user.detail && user.detail.user_type === "user" && (
+                      <>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                            href={"/unconfirmed-courses/"+user?.id}
+                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            >
+                              <span className="inline-block align-middle">
+                                <Cog6ToothIcon className="h-5" aria-hidden="true" />
+                              </span>
+                              <span className="inline-block align-middle ml-2">
+                                Onaylanmamış
+                              </span>
+                              <span className="inline-block align-middle ml-2">
+                                Dersler
+                              </span>
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              href={"/given-courses/"+user?.id}
+                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            >
+                              <span className="inline-block align-middle">
+                                <DocumentArrowUpIcon className="h-5" aria-hidden="true" />
+                              </span>
+                              <span className="inline-block align-middle ml-2">
+                                Verilen Dersler
+                              </span>
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              href={"/received-courses/"+user?.id}
+                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            >
+                              <span className="inline-block align-middle">
+                                <DocumentDuplicateIcon className="h-5" aria-hidden="true" />
+                              </span>
+                              <span className="inline-block align-middle ml-2">
+                                Alınan Dersler
+                              </span>
+                            </Link>
+                          )}
+                        </Menu.Item>                        
+                      </>
+                      )}
                       <hr />
                       <Menu.Item>
                         {({ active }) => (
