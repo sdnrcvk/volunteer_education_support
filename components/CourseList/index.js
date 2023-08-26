@@ -5,7 +5,7 @@ import { ChevronDownIcon, FunnelIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getAllCategories } from '@/pages/api/categories'
-import { getCoursesByUserId } from '@/pages/api/courses'
+import { deleteGivenCourse, getConfirmedCoursesByUser, getUnconfirmedCoursesByUser } from '@/pages/api/courses'
 import { useAuth } from '@/pages/contexts/authContext'
 import { deleteReceivedCourse, getReceivedCoursesByUserId } from '@/pages/api/receivedCourses'
 import { FaTrash } from "react-icons/fa";
@@ -29,7 +29,8 @@ export default function CourseList() {
   useEffect(() => {
     if (pagePath === "/given-courses/[id]") {
       // Verilen dersleri getirmek için API çağrısı
-      getCoursesByUserId(user?.detail?.id).then(data => {
+      getConfirmedCoursesByUser(user?.detail?.id).then(data => {
+        console.log(data);
         setCourses(data);
       }).catch(err => {
         console.log(err);
@@ -37,6 +38,19 @@ export default function CourseList() {
     } else if (pagePath === "/received-courses/[id]") {
       // Alınan dersleri getirmek için farklı bir API çağrısı
       getReceivedCoursesByUserId(user?.detail?.id).then(data => {
+        // Aldığınız nesneyi diziye dönüştürün
+        const coursesArray = Object.values(data);
+
+        // Geçerli kursları ayrı bir diziye filtreleyin
+        const validCourses = coursesArray.filter(course => course.course !== null);
+        console.log("received : " ,validCourses);
+        setCourses(validCourses);
+      }).catch(err => {
+        console.log(err);
+      });
+    } else if(pagePath === "/unconfirmed-courses/[id]"){
+      // Henüz onay bekleyen verilen dersleri getirmek için farklı bir API çağrısı
+      getUnconfirmedCoursesByUser(user?.detail?.id).then(data => {
         console.log(data);
         setCourses(data);
       }).catch(err => {
@@ -118,12 +132,11 @@ export default function CourseList() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
-            {pagePath==="/received-courses/[id]" ? (
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">Alınan Dersler</h1>
-            ) : 
-            (            
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">Verilen Dersler</h1> 
-            )}
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+              {pagePath === "/received-courses/[id]" ? "Alınan Dersler" :
+              pagePath === "/given-courses/[id]" ? "Verilen Dersler" :
+              pagePath === "/unconfirmed-courses/[id]" ? "Onay Bekleyen Verilen Dersler" : ""}
+            </h1>
             <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -212,7 +225,7 @@ export default function CourseList() {
                   <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
                       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                       {courses?.length > 0 ? courses?.map((course) => (
-                          <Link key={course.id} href={"/course-detail/"+course.id}className="group">
+                        <div key={course.id} className="group">
                           <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                               <img
                               src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
@@ -220,14 +233,16 @@ export default function CourseList() {
                               className="h-full w-full object-cover object-center group-hover:opacity-75"
                               />
                             <Link href={"#"} className="position-absolute">
-                              <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px'}} type="button" onClick={()=>deleteReceivedCourse(course.id)}>
+                              <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px'}} type="button" onClick={()=>deleteGivenCourse(course.id)}>
                                 <FaTrash />
                               </button>
                             </Link>
                           </div>
+                          <Link href={"/course-detail/"+course.id}>
                           <h3 className="mt-4 text-sm text-gray-700">{course.title}</h3>
-                          <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
                           </Link>
+                          <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
+                        </div>
                       )): (<p>Verdiğiniz ders bulunmamaktadır...</p>)}
                       </div>
                   </div>
@@ -242,27 +257,61 @@ export default function CourseList() {
                 <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                     {courses?.length > 0 ? courses?.map((course) => (
-                        <Link key={course.course.id} href={"/course-detail/"+course.course.id} className="group">
-                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                            <img
-                            src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                            alt="course image"
-                            className="h-full w-full object-cover object-center group-hover:opacity-75"
-                            />
-                          <Link href={"#"} className="position-absolute">
-                            <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px'}} type="button" onClick={()=>deleteReceivedCourse(course.id)}>
-                              <FaTrash />
-                            </button>
+                        <div key={course.course.id} className="group">
+                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                              <img
+                              src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                              alt="course image"
+                              className="h-full w-full object-cover object-center group-hover:opacity-75"
+                              />
+                            <Link href={"#"} className="position-absolute">
+                              <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px'}} type="button" onClick={()=>deleteReceivedCourse(course.id)}>
+                                <FaTrash />
+                              </button>
+                            </Link>
+                          </div>
+                          <Link href={"/course-detail/"+course.course.id}>
+                          <h3 className="mt-4 text-sm text-gray-700">{course.course.title}</h3>
                           </Link>
+                          <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
                         </div>
-                        <h3 className="mt-4 text-sm text-gray-700">{course.course.title}</h3>
-                        <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
-                        </Link>
                     )): (<p>Aldığınız ders bulunmamaktadır...</p>)}
                     </div>
                 </div>
                 </div>
             </div>
+            )}
+
+            {/* Unconfirmed Courses */}
+            {pagePath === "/unconfirmed-courses/[id]" && (
+              <div className="lg:col-span-3">
+                  <div className="bg-white">
+                  <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-2 lg:max-w-7xl lg:px-8">
+                      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                      {courses?.length > 0 ? courses?.map((course) => (
+                          <div key={course.id} className="group">
+                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                                <img
+                                src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                                alt="course image"
+                                className="h-full w-full object-cover object-center group-hover:opacity-75"
+                                />
+                              <Link href={"#"} className="position-absolute">
+                                <button className="rounded-md bg-red-500 px-3 py-2 text-sm border-none font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style={{ top: '10px', right: '10px'}} type="button" onClick={()=>deleteGivenCourse(course.id)}>
+                                  <FaTrash />
+                                </button>
+                              </Link>
+                            </div>
+                          <Link href={"/course-detail/"+course.id}>
+                          <h3 className="mt-4 text-sm text-gray-700">{course.title}</h3>
+                          </Link>
+                          <p className="mt-1 text-lg font-medium text-gray-900">0 ₺</p>
+                          </div>
+                      )): (<p>Onay bekleyen verilen ders bulunmamaktadır...</p>)}
+                      </div>
+                  </div>
+                  </div>
+              </div>
             )}
             
             </div>
