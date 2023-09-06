@@ -17,6 +17,7 @@ export default function CourseDetail() {
   useEffect(()=>{
     if(id){
       getCourseDetailByCourseId(id).then(data => {
+        console.log(data);
         setCourseDetail(data);
       }).catch(err => {
         console.log(err);
@@ -41,7 +42,7 @@ export default function CourseDetail() {
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://images.unsplash.com/photo-1537495329792-41ae41ad3bf0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"/>
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">{courseDetail?.user_id}</h2>
+              <h2 className="text-sm title-font text-gray-500 tracking-widest">{courseDetail?.user?.name}</h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{courseDetail?.title}</h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -64,7 +65,7 @@ export default function CourseDetail() {
                 </span>
                 <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
                   <a className="text-gray-500">
-                    {courseDetail?.category_id}
+                    {courseDetail?.category?.category_name}
                   </a>
                 </span>
               </div>
