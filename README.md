@@ -1,8 +1,24 @@
+# Volunteer Education Support Platform
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+To get started with this project, follow these steps:
+
+1. Clone the repository to your local machine.
+   
+2. Install the required dependencies using npm, yarn, or pnpm:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+   
+3. Run the development server:
 
 ```bash
 npm run dev
@@ -12,31 +28,33 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Used Technologies
 ### Frontend
--**Next.js**
+-**Next.js:** A popular React framework for building web applications
 
--**Formik** 
+-**Formik:** A form library for React to simplify form management.
 
--**Form validation with Yup** 
+-**Form validation with Yup:** A schema-based validation library for forms.
 
--**Bootstrap** 
+-**Bootstrap:** A front-end framework for responsive web design. 
 
--**MDBootstrap** 
+-**MDBootstrap:** Material Design components for Bootstrap.
 
--**Tailwind CSS** 
+-**Tailwind CSS:** A utility-first CSS framework.
 
--**Axios** 
+-**Axios:** A promise-based HTTP client for making API requests.
 
--**SweetAlert2**
+-**SweetAlert2:** A beautiful, responsive, and customizable replacement for JavaScript's pop-up boxes.
 
 ### Backend
 
-<a href="https://github.com/sdnrcvk/volunteer-education-support-api">Click to access the backend repository</a>
+The backend for this project can be found in <a href="https://github.com/sdnrcvk/volunteer-education-support-api">this repository.</a>
 
 ## Project Images
+Here are some screenshots of the project:
+
 ![Ekran Görüntüsü (152)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/05313db9-39ae-4a60-94cf-98c0c19c981d)
 ![Ekran Görüntüsü (153)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/411796dd-f1b0-4e90-afb6-8cc107b590b5)
 ![Ekran Görüntüsü (154)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/7a2e76a6-42cc-4a81-a0ba-edd1c9c9db5a)
@@ -56,7 +74,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ![Ekran Görüntüsü (172)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/eb92fbdc-f136-4c90-a02e-553dbf49a784)
 ![Ekran Görüntüsü (173)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/68ce093e-ed9f-45e4-ab1c-88378929ad47)
 ![Ekran Görüntüsü (174)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/c8b9b03d-41bc-49fd-975a-a54ca9975d16)
-![Ekran Görüntüsü (178)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/16a34a4e-51d8-472e-9689-33dfdebeb243)
 ![Ekran Görüntüsü (176)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/3ec610af-fdd5-4702-9170-82584f4be15e)
 ![Ekran Görüntüsü (177)](https://github.com/sdnrcvk/volunteer_education_support_frontend/assets/58807892/df26e31d-909c-424b-a00c-a57bf4f60533)
 
