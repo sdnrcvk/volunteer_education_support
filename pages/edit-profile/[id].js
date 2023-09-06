@@ -24,7 +24,7 @@ export default function EditProfile() {
   const [cities, setCities]=useState([])
   const [districts, setDistricts]=useState([])
   const [userDetails, setUserDetails]=useState([])
-  const {user}=useAuth();
+  const {user,logout}=useAuth();
   const router = useRouter()
   const { id } = router.query
 
@@ -78,6 +78,7 @@ export default function EditProfile() {
     onSubmit:(values,{resetForm})=>{
       updateUserDetails(values,id);
       resetForm();
+      logout();
     },
     validationSchema,
   })
@@ -175,9 +176,9 @@ export default function EditProfile() {
                           <input
                               id="female"
                               name="gender"
-                              value="female"
+                              value="Kadın"
                               type="radio"
-                              onChange={handleChange} checked={values.gender==="female"}
+                              onChange={handleChange} checked={values.gender==="Kadın"}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label htmlFor="push-everything" className="block text-sm leading-6 text-gray-900">
@@ -188,9 +189,9 @@ export default function EditProfile() {
                           <input
                               id="male"
                               name="gender"
-                              value="male"
+                              value="Erkek"
                               type="radio"
-                              onChange={handleChange} checked={values.gender==="male"}
+                              onChange={handleChange} checked={values.gender==="Erkek"}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label htmlFor="push-email" className="block text-sm leading-6 text-gray-900">

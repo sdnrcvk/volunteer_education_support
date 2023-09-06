@@ -109,10 +109,10 @@ export default function Register() {
               <input
                 id="female"
                 name="gender"
-                value="female"
+                value="Kadın"
                 type="radio"
                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                onChange={handleChange} checked={values.gender==="female"}
+                onChange={handleChange} checked={values.gender==="Kadın"}
               />
               <label htmlFor="push-everything" className="block text-sm leading-6 text-gray-900">
                 Kadın
@@ -122,10 +122,10 @@ export default function Register() {
               <input
                 id="male"
                 name="gender"
-                value="male"
+                value="Erkek"
                 type="radio"
                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                onChange={handleChange} checked={values.gender==="male"}
+                onChange={handleChange} checked={values.gender==="Erkek"}
               />
               <label htmlFor="push-email" className="block text-sm leading-6 text-gray-900">
                 Erkek
@@ -222,7 +222,7 @@ export default function Register() {
               className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder="Şifreyi Yeniden Giriniz "
             />
-            {errors.passwordConfirm && touched.passwordConfirm && (<p className="text-danger text-start">{errors.passwordConfirm}</p>)}
+            {errors.passwordConfirm && touched.passwordConfirm && (<div className="bg-red-100 border border-red-400 text-red-700 px-2 py-1 mt-1 rounded relative" role="alert">{errors.passwordConfirm}</div>)}
           </div>
         </div>
 

@@ -50,8 +50,7 @@ export default function contact() {
                   <p className="text-gray-500 mb-6">
                   Müşteri memnuniyeti ve güçlü iş ilişkileri, işimizin temel değerleridir. Sizden duymak için sabırsızlanıyoruz!
                   </p>
-                  <p className="text-gray-500 mb-2">New York, 94126, United States</p>
-                  <p className="text-gray-500 mb-2">+ 01 234 567 89</p>
+                  <p className="text-gray-500 mb-2">İstanbul</p>
                   <p className="text-gray-500 mb-2">info@vedus.com</p>
                 </div>
                 <div className="grow-0 shrink-0 basis-auto mb-12 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
